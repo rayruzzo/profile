@@ -34,7 +34,7 @@ export default function ResumePage() {
 
   return (
     <div>
-      {resume && <ResumeDisplay {...resume} />}
+      {resume && <ResumeDisplay {...JSON.parse(JSON.stringify(resume))} />}
       <section>
         <h2>Experience</h2>
         {jobs.map((job: any) => (

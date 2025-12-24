@@ -1,9 +1,20 @@
+
 import educationFunctions from "@/services/education";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET() {
-    const educations = await educationFunctions.getAllEducation();
-    return NextResponse.json(educations);
+export async function GET(request: NextRequest) {
+    const { searchParams } = new URL(request.url);
+    const id = searchParams.get("id");
+    if (id) {
+        const education = await educationFunctions.getEducationById(id);
+        if (!education) {
+            return NextResponse.json({ message: "Education not found" }, { status: 404 });
+        }
+        return NextResponse.json(education);
+    } else {
+        const educations = await educationFunctions.getAllEducation();
+        return NextResponse.json({ education: educations });
+    }
 }
 
 export async function POST(request: NextRequest) {

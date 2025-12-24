@@ -39,15 +39,25 @@ export default function AdminPage() {
 	}
 
 	return (
-		<main>
+		<><main>
 			<h1>Admin Portal</h1>
+			<h2>Existing Content</h2>
+			<ul>
+				<li><a href="/admin/education">Manage Education</a></li>
+				<li><a href="/admin/jobs">Manage Jobs</a></li>
+				<li><a href="/admin/projects">Manage Projects</a></li>
+				<li><a href="/admin/editResume">Edit Resume</a></li>
+				{/* Add more management links as needed */}
+			</ul>
+
+			<h2>Manage Content</h2>
 			<ul>
 				<li><a href="/admin/addEducation">Add Education</a></li>
 				<li><a href="/admin/addJobs">Add Job</a></li>
-				<li><a href="/admin/addProject.tsx">Add Project</a></li>
-                <li><a href="/admin/editResume">Edit Resume</a></li>
+				<li><a href="/admin/addProject">Add Project</a></li>
 				{/* Add more admin links as needed */}
 			</ul>
-		</main>
+	</main>
+	</>
 	);
 }

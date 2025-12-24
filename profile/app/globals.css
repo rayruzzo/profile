@@ -12,6 +12,7 @@
   --font-mono: var(--font-geist-mono);
 }
 
+
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
@@ -19,11 +20,220 @@
   }
 }
 
+/* Resume component formatting */
+.resume-container {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  margin-bottom: 2rem;
+}
+.resume-header {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+.avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #ccc;
+}
+.tagline {
+  font-style: italic;
+  font-size: 1.1rem;
+}
+.summary {
+  margin-top: 1.5rem;
+}
+.summary h2 {
+  margin-bottom: 0.5rem;
+}
+.email, .location, .linkedin, .github {
+  font-size: 1rem;
+  margin-bottom: 0.25rem;
+}
+
+/* Job, Education, and Project component formatting */
+.job-card, .education-card, .project-card {
+  background: transparent;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+  box-shadow: none;
+  margin-bottom: 1.5rem;
+  padding: 1.5rem;
+  transition: border-color 0.2s;
+}
+.job-card:hover, .education-card:hover, .project-card:hover {
+  border-color: #999;
+}
+.job-card h3, .education-card h3, .project-card h3 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  font-size: 1.35rem;
+  font-weight: 600;
+}
+.job-card h4, .education-card h4 {
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #666;
+}
+.job-card .location, .education-card .location {
+  font-size: 0.95rem;
+  margin-bottom: 0.25rem;
+  color: #888;
+}
+.job-card .date-range, .education-card .date-range {
+  font-size: 0.9rem;
+  color: #888;
+  margin-bottom: 0.75rem;
+  font-style: italic;
+}
+.job-card .details, .education-card .details {
+  margin-top: 0.75rem;
+  font-size: 1rem;
+  line-height: 1.6;
+  padding-left: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+.job-card .details {
+  list-style-type: disc;
+}
+
+/* Project-specific styles */
+.project-card .details {
+  margin-top: 0.75rem;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+.project-card .tech-stack {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  background: rgba(0, 0, 0, 0.02);
+  border-radius: 4px;
+  font-size: 0.95rem;
+}
+.project-card .tech-label {
+  font-weight: 600;
+}
+.project-card .project-links {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+.project-card .project-links a {
+  padding: 0.5rem 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition: background 0.2s, border-color 0.2s;
+}
+.project-card .project-links a:hover {
+  background: rgba(0, 0, 0, 0.05);
+  border-color: #999;
+}
+.project-card .project-preview {
+  width: 100%;
+  max-width: 600px;
+  height: auto;
+  border-radius: 6px;
+  margin: 1rem 0;
+  border: 1px solid #ddd;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: system-ui, sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
+
+.container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+}
+
+h1, h2, h3, h4 {
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+  font-weight: 600;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+label {
+  font-size: 1rem;
+  margin-bottom: 0.25rem;
+}
+
+
+input, textarea, select {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+  outline: none;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+textarea {
+  min-height: 120px;
+  resize: vertical;
+  font-family: inherit;
+  line-height: 1.5;
+  margin-top: 0.25rem;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+}
+
+input:focus, textarea:focus, select:focus {
+  border-color: #888;
+}
+
+button {
+  padding: 0.5rem 1.25rem;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  background: #eee;
+  transition: background 0.2s;
+}
+
+button:hover {
+  background: #ddd;
+}
+
+section {
+  margin-bottom: 2rem;
+}
+
+/* Utility spacing */
+.mb-1 { margin-bottom: 0.5rem; }
+.mb-2 { margin-bottom: 1rem; }
+.mt-1 { margin-top: 0.5rem; }
+.mt-2 { margin-top: 1rem; }
+.p-1 { padding: 0.5rem; }
+.p-2 { padding: 1rem; }
 
 header {
   display: flex;
@@ -73,4 +283,20 @@ header {
 }
 .header-right a:hover {
   text-decoration: underline;
-} 
+}
+
+/* Admin footer */
+.admin-footer {
+  margin-top: 3rem;
+  padding: 1.5rem;
+  border-top: 1px solid #e0e0e0;
+  text-align: center;
+}
+.admin-footer a {
+  text-decoration: none;
+  color: var(--foreground);
+  font-size: 1rem;
+}
+.admin-footer a:hover {
+  text-decoration: underline;
+}

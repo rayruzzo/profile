@@ -1,14 +1,33 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import type { Education } from "@/types/education";
 
-function AddEducationForm() {
-  const [form, setForm] = useState({
-    school: "",
-    degree: "",
-    fieldOfStudy: "",
-    startDate: "",
-    endDate: "",
-    description: "",
+export type AddEducationFormProps = {
+  id?: string;
+  initialData?: Education;
+};
+
+function AddEducationForm({ id, initialData }: AddEducationFormProps) {
+  const [form, setForm] = useState<Education>({
+    institution: initialData?.institution || "",
+    degree: initialData?.degree || "",
+    fieldOfStudy: initialData?.fieldOfStudy || "",
+    startDate: initialData?.startDate || "",
+    endDate: initialData?.endDate || "",
+    description: initialData?.description || "",
   });
+
+  useEffect(() => {
+    if (initialData) {
+      setForm({
+        institution: initialData.institution || "",
+        degree: initialData.degree || "",
+        fieldOfStudy: initialData.fieldOfStudy || "",
+        startDate: initialData.startDate || "",
+        endDate: initialData.endDate || "",
+        description: initialData.description || "",
+      });
+    }
+  }, [initialData]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -16,33 +35,37 @@ function AddEducationForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const response = await fetch("/api/education", {
-      method: "POST",
+    const method = id ? "PUT" : "POST";
+    const url = id ? `/api/education/${id}` : "/api/education";
+    const response = await fetch(url, {
+      method,
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(form),
     });
     if (response.ok) {
-      alert("Education added successfully!");
-      setForm({
-        school: "",
-        degree: "",
-        fieldOfStudy: "",
-        startDate: "",
-        endDate: "",
-        description: "",
-      });
+      alert(id ? "Education updated successfully!" : "Education added successfully!");
+      if (!id) {
+        setForm({
+          institution: "",
+          degree: "",
+          fieldOfStudy: "",
+          startDate: "",
+          endDate: "",
+          description: "",
+        });
+      }
     } else {
-      alert("Error adding education.");
+      alert("Error saving education.");
     }
   };
 
   return (
     <div>
-      <h2>Add Education Form</h2>
+      <h2>{id ? "Edit" : "Add"} Education Form</h2>
       <form id="education-form" onSubmit={handleSubmit}>
         <label>
-          School:
-          <input type="text" name="school" value={form.school} onChange={handleChange} />
+          Institution:
+          <input type="text" name="institution" value={form.institution} onChange={handleChange} />
         </label>
         <label>
           Degree:
@@ -53,18 +76,18 @@ function AddEducationForm() {
           <input type="text" name="fieldOfStudy" value={form.fieldOfStudy} onChange={handleChange} />
         </label>
         <label>
-          Start Date:
-          <input type="date" name="startDate" value={form.startDate} onChange={handleChange} />
+          Start Date (MM/YYYY):
+          <input type="month" name="startDate" value={form.startDate} onChange={handleChange} />
         </label>
         <label>
-          End Date:
-          <input type="date" name="endDate" value={form.endDate} onChange={handleChange} />
+          End Date (MM/YYYY):
+          <input type="month" name="endDate" value={form.endDate} onChange={handleChange} />
         </label>
         <label>
           Description:
           <textarea name="description" value={form.description} onChange={handleChange}></textarea>
         </label>
-        <button type="submit">Add Education</button>
+        <button type="submit">{id ? "Update" : "Add"} Education</button>
       </form>
     </div>
   );

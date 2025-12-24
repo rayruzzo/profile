@@ -1,15 +1,35 @@
-import projectFunctions from "@/services/project";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import type { Project } from "@/types/project";
 
-function AddProjectForm() {
-  const [form, setForm] = useState({
-    name: "",
-    description: "",
-    techStack: "",
-    gh_link: "",
-    live_link: "",
-    previewImage: "",
+export type AddProjectFormProps = {
+  id?: string;
+  initialData?: Project;
+};
+
+type ProjectWithStringStack = Omit<Project, "techStack"> & { techStack: string };
+
+function AddProjectForm({ id, initialData }: AddProjectFormProps) {
+  const [form, setForm] = useState<ProjectWithStringStack>({
+    name: initialData?.name || "",
+    description: initialData?.description || "",
+    techStack: initialData?.techStack ? initialData.techStack.join(", ") : "",
+    gh_link: initialData?.gh_link || "",
+    live_link: initialData?.live_link || "",
+    previewImage: initialData?.previewImage || "",
   });
+
+  useEffect(() => {
+    if (initialData) {
+      setForm({
+        name: initialData.name || "",
+        description: initialData.description || "",
+        techStack: initialData.techStack ? initialData.techStack.join(", ") : "",
+        gh_link: initialData.gh_link || "",
+        live_link: initialData.live_link || "",
+        previewImage: initialData.previewImage || "",
+      });
+    }
+  }, [initialData]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -18,29 +38,33 @@ function AddProjectForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const techStackArray = form.techStack.split(',').map(tech => tech.trim());
-    const response = await fetch("/api/projects", {
-      method: "POST",
+    const method = id ? "PUT" : "POST";
+    const url = id ? `/api/projects?id=${id}` : "/api/projects";
+    const response = await fetch(url, {
+      method,
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ ...form, techStack: techStackArray }),
     });
     if (response.ok) {
-      alert("Project added successfully!");
-      setForm({
-        name: "",
-        description: "",
-        techStack: "",
-        gh_link: "",
-        live_link: "",
-        previewImage: "",
-      });
+      alert(id ? "Project updated successfully!" : "Project added successfully!");
+      if (!id) {
+        setForm({
+          name: "",
+          description: "",
+          techStack: "",
+          gh_link: "",
+          live_link: "",
+          previewImage: "",
+        });
+      }
     } else {
-      alert("Error adding project.");
+      alert("Error saving project.");
     }
   };
 
   return (
     <div>
-      <h2>Add Project Form</h2>
+      <h2>{id ? "Edit" : "Add"} Project Form</h2>
       <form id="project-form" onSubmit={handleSubmit}>
         <label>
           Name:
@@ -66,7 +90,7 @@ function AddProjectForm() {
           Preview Image URL:
           <input type="text" name="previewImage" value={form.previewImage} onChange={handleChange} />
         </label>
-        <button type="submit">Add Project</button>
+        <button type="submit">{id ? "Update" : "Add"} Project</button>
       </form>
     </div>
   );

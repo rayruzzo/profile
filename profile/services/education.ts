@@ -1,13 +1,10 @@
 import Education from '../db/education.model';
+import connectDB from '../config/db';
+import type { Education as EducationType } from "@/types/education";
 
+await connectDB()
 const educationFunctions = {
-    async createEducation(data: {
-        institution: string;
-        degree: string;
-        fieldOfStudy: string;
-        startDate: Date;
-        endDate?: Date;
-    }) {
+    async createEducation(data: EducationType) {
         const education = new Education(data);
         return await education.save();
     },
@@ -19,14 +16,8 @@ const educationFunctions = {
     async getEducationById(id: string) {
         return await Education.findById(id);
     },
-    
-    async updateEducation(id: string, data: Partial<{
-        institution: string;
-        degree: string;
-        fieldOfStudy: string;
-        startDate: Date;
-        endDate?: Date;
-    }>) {
+
+    async updateEducation(id: string, data: Partial<EducationType>) {
         return await Education.findByIdAndUpdate(id, data, { new: true });
     },
 

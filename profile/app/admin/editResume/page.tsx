@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import ResumeForm from "@/components/resumeForm";
 import { ResumeFormProps } from "@/components/resumeForm";
+import AdminFooter from "@/components/adminFooter";
 
 export default function ResumePage() {
   const [resume, setResume] = useState<ResumeFormProps["initialData"] | null>(null);
@@ -27,6 +28,7 @@ export default function ResumePage() {
     <div>
       <h1>{resume ? "Edit Resume" : "Create Resume"}</h1>
       <ResumeForm initialData={resume || undefined} />
+      <AdminFooter />
     </div>
   );
 }

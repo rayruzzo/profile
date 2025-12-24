@@ -1,14 +1,11 @@
 import Project from '../db/project.model';
+import connectDB from '../config/db';
+import type { Project as ProjectType } from "@/types/project";
+
+await connectDB()
 
 const projectFunctions = {
-    async createProject(data: {
-        name: string;
-        description?: string;
-        techStack?: string[];
-        gh_link?: string;
-        live_link?: string;
-        previewImage?: string;
-    }) {
+    async createProject(data: ProjectType) {
         const project = new Project(data);
         return await project.save();
     },
@@ -20,15 +17,8 @@ const projectFunctions = {
     async getProjectById(id: string) {
         return await Project.findById(id);
     },
-    
-    async updateProject(id: string, data: Partial<{
-        name: string;
-        description?: string;
-        techStack?: string[];
-        gh_link?: string;
-        live_link?: string;
-        previewImage?: string;
-    }>) {
+
+    async updateProject(id: string, data: Partial<ProjectType>) {
         return await Project.findByIdAndUpdate(id, data, { new: true });
     },
 

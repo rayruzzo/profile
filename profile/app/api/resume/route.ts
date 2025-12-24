@@ -12,6 +12,7 @@ export async function GET() {
   }
   console.log("Resume data:", resume);
   const jobs = await jobFunctions.getAllJobs();
+  console.log("Jobs data:", jobs);
   const education = await educationFunctions.getAllEducation();
 
   return NextResponse.json({ resume: resume, jobs: jobs, education: education });
