@@ -5,7 +5,7 @@ function ProjectDisplay({ name, description, techStack, gh_link, live_link, prev
     return (
         <div className="project-card">
             <h3>{name}</h3>
-            {previewImage && <img src={previewImage} alt={`${name} preview`} className="project-preview" />}
+            {previewImage && <img src={`https://res.cloudinary.com/dljouwgcl/image/upload/${previewImage}`} alt={`${name} preview`} className="project-preview" />}
             {description && <p className="details">{description}</p>}
             {techStack && techStack.length > 0 && (
                 <div className="tech-stack">
