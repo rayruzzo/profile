@@ -9,7 +9,6 @@ function Header() {
                 <ul>
                     <li><a href="/resume">RESUME</a></li>
                     <li><a href="/projects">PROJECTS</a></li>
-                    <li><a href="#" title="Coming soon">BLOG</a></li>
                 </ul>
 
             </div>
